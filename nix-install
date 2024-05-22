@@ -1,0 +1,17 @@
+# format
+mkfs.btrfs /dev/mapper/vg_linux-lv_nix -f
+mount /dev/mapper/vg_linux-lv_nix /mnt
+
+# subvolume
+btrfs subvolume create /mnt/@
+umount /mnt
+
+# mount
+mount -o defaults,noatime,compress=zstd,commit=120,subvol=@ /dev/mapper/vg_linux-lv_nix /mnt
+mkdir -p /mnt/boot
+mount /dev/nvme0n1p1 /mnt/boot/
+
+# install
+nixos-generate-config --root /mnt
+ln -sf ./configuration.nix.common /mnt/etc/nixos/configuration
+nixos-install --option substituters https://mirrors.ustc.edu.cn/nix-channels/store
