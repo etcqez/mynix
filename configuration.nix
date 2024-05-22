@@ -17,6 +17,8 @@
      tree
      emacs
      neovim
+     tree
+     pciutils
  ];
  services.xserver.displayManager.autoLogin.enable = true;
  services.xserver.displayManager.autoLogin.user = "f";
