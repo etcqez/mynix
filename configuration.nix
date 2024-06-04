@@ -5,21 +5,9 @@
 { config, lib, pkgs, ... }:
 
 {
- environment.systemPackages = with pkgs; [
-     kitty
-     firefox
-     nano
-     neofetch
-     cpu-x
-     git
-     zsh
-     eza
-     tree
-     emacs
-     neovim
-     tree
-     pciutils
- ];
+ #hardware.bluetooth.settings = { General = { ControllerMode = "bredr"; }; };
+ hardware.pulseaudio.extraConfig = "load-module module-switch-on-connect";
+ environment.systemPackages = with pkgs; [ kitty firefox nano neofetch cpu-x git zsh eza tree emacs neovim tree pciutils pavucontrol ];
  services.xserver.displayManager.autoLogin.enable = true;
  services.xserver.displayManager.autoLogin.user = "f";
  i18n.inputMethod = {
@@ -65,18 +53,18 @@
      ./hardware-configuration.nix
    ];
 
-# boot.loader.timeout = 1;
-# boot.loader = {
-#  efi = {
-#    canTouchEfiVariables = true;
-#    efiSysMountPoint = "/efi"; # ← use the same mount point here.
-#  };
-#  grub = {
-#     efiSupport = true;
-#     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-#     device = "nodev";
-#  };
-#};
+ boot.loader.timeout = 1;
+ boot.loader = {
+  efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/efi"; # ← use the same mount point here.
+  };
+  grub = {
+     efiSupport = true;
+     #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+     device = "nodev";
+  };
+};
 
  networking.hostName = "Nix"; # Define your hostname.
  # Pick only one of the below networking options.
